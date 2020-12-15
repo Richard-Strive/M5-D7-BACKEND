@@ -1,10 +1,11 @@
 const express = require("express");
 const listEndpoints = require("express-list-endpoints");
-const productsRouter = require("./services/products");
+const booksRoute = require("./services/books");
+const commentsRoute = require("./services/comments");
 const {
-  badRequestHandler,
-  notFoundHandler,
-  genericErrorHandler,
+	badRequestHandler,
+	notFoundHandler,
+	genericErrorHandler,
 } = require("./errorHandlers");
 
 const server = express();
@@ -12,8 +13,10 @@ const server = express();
 const port = process.env.PORT || 3002;
 
 server.use(express.json());
-server.use("/products", productsRouter);
 
+server.use("/books", booksRoute);
+server.use("/books", commentsRoute);
+//ERROR HANDLING MIDDLEWARES
 server.use(badRequestHandler);
 server.use(notFoundHandler);
 server.use(genericErrorHandler);
@@ -21,5 +24,5 @@ server.use(genericErrorHandler);
 console.log(listEndpoints(server));
 
 server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+	console.log(`Server listening on port ${port}`);
 });
